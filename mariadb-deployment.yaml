@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mariadb
+  name: mariadb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mariadb
+    spec:
+      containers:
+        - env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
+            - name: MARIADB_CHARACTER_SET
+              value: utf8mb4
+            - name: MARIADB_COLLATE
+              value: utf8mb4_unicode_ci
+            - name: MARIADB_DATABASE
+              value: bitnami_moodle
+            - name: MARIADB_USER
+              value: bn_moodle
+          image: docker.io/bitnami/mariadb:10.5-debian-10
+          name: mariadb
+          resources:
+            requests:
+              cpu: 100m
+          volumeMounts:
+            - mountPath: /bitnami/mariadb
+              name: mariadb-data
+      restartPolicy: Always
+      volumes:
+        - name: mariadb-data
+          persistentVolumeClaim:
+            claimName: mariadb-data
+status: {}

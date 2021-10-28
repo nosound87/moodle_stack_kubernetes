@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: moodle
+  name: moodle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moodle
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: moodle
+    spec:
+      containers:
+        - env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
+            - name: MOODLE_DATABASE_HOST
+              value: "mariadb-svc"
+            - name: MOODLE_DATABASE_NAME
+              value: bitnami_moodle
+            - name: MOODLE_DATABASE_PORT_NUMBER
+              value: "3306"
+            - name: MOODLE_DATABASE_USER
+              value: bn_moodle
+            - name: MOODLE_PASSWORD
+              value: q1w2e3r4
+            - name: MOODLE_USERNAME
+              value: admin
+          image: docker.io/bitnami/moodle:3-debian-10
+          name: moodle
+          ports:
+            - containerPort: 8080
+            - containerPort: 8443
+          resources:
+            requests:
+              cpu: 100m 
+          volumeMounts:
+            - mountPath: /bitnami/moodle
+              name: moodle-data
+            - mountPath: /bitnami/moodledata
+              name: moodledata-data
+      restartPolicy: Always
+      volumes:
+        - name: moodle-data
+          persistentVolumeClaim:
+            claimName: moodle-data
+        - name: moodledata-data
+          persistentVolumeClaim:
+            claimName: moodledata-data
+status: {}
