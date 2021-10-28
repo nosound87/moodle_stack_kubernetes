@@ -9,4 +9,4 @@ Default login and password to access dash is:
 login: admin
 Pass: q1w2e3r4
 
-You need to check NodePort service which port mapping default 8080 web interface (example: 31843) and connect in your browser to access web interface moodle (example: http://yourhost:31843)
+You need to check NodePort service which port mapping default 8080 web interface (example: 31843) and connect it in your browser to access web interface moodle (example: http://yourhost:31843)
