@@ -16,3 +16,10 @@ login: admin
 Pass: q1w2e3r4
 
 You need to check NodePort service which port mapping default 8080 web interface (example: 31843) and connect it in your browser to access web interface moodle (example: http://yourhost:31843)
+
+
+How to use:
+
+kubectl apply -f <all_files>
+
+Have fun
